@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Salvacare's Assessment Tools</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --indigo: #3E4C8A;
+    --coral: #E85D4C;
+    --teal: #2F8F8F;
+    --bg: #FFFFFF;
+    --grey: #6B7280;
+    --border: #E5E7EB;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--navy);
+    line-height: 1.5;
+    padding: 24px 20px 60px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--navy);
+  }
+  .subtitle {
+    color: var(--grey);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #FAFBFC;
+  }
+  .card p {
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: #2D3748;
+  }
+  .card p:last-child { margin-bottom: 0; }
+  .card ul {
+    margin: 8px 0 12px 20px;
+    font-size: 15px;
+    color: #2D3748;
+  }
+  .card li { margin-bottom: 6px; }
+  .btn-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  button, a.btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  button:active, a.btn:active { opacity: 0.8; }
+  .btn-primary {
+    background: var(--coral);
+    color: white;
+  }
+  .btn-secondary {
+    background: white;
+    color: var(--navy);
+    border: 1.5px solid var(--border);
+  }
+  .btn-secondary.copied {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+  .hint {
+    font-size: 13px;
+    color: var(--grey);
+    text-align: center;
+    margin-top: 16px;
+  }
+  .msg-preview {
+    font-size: 13px;
+    color: var(--grey);
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 16px;
+    max-height: 140px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: ui-monospace, monospace;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">Salvacare</div>
+  <h1>Know someone who'd find this useful?</h1>
+  <p class="subtitle">Send them the message below — takes 10 seconds.</p>
+
+  <div class="card">
+    <p><strong>Salvacare's assessment tools</strong> help people understand where they're at right now, so any nutrition and supplement support can be personalised from the start.</p>
+    <p>They're for anyone who's either:</p>
+    <ul>
+      <li>Feeling well and wanting to get ahead of their long-term cellular health, or</li>
+      <li>Currently receiving clinical support and wanting nutrition guidance tailored to their situation</li>
+    </ul>
+    <p>Everyone also completes a short Nutrition Readiness check. Confidential, 5–8 minutes each.</p>
+  </div>
+
+  <div class="btn-row">
+    <a class="btn btn-primary" id="mailBtn" href="#">Open in Mail</a>
+    <button class="btn-secondary" id="copyBtn">Copy message</button>
+  </div>
+
+  <p class="hint">Prefer text or WhatsApp? Tap "Copy message" and paste it there instead.</p>
+
+  <div class="msg-preview" id="preview"></div>
+
+<script>
+  const subject = "A tool from Salvacare you might find useful";
+  const body = `Hi there,
+
+Tristen from Salvacare, part of my BNI chapter, has something he thinks you'd find useful.
+
+Head to salvacare.co.nz and click the "Where do I start?" button in the bottom-right corner. It'll open a panel with 3 short assessments (5-8 minutes each). You'll need to complete 2 of the 3:
+
+1. Nutrition Readiness - Are You Ready for Nutrition Support? (everyone completes this one)
+2. Then choose ONE of:
+   - Proactive Approach - Understand Your Unhealthy Cell Risk (if you're feeling well and want to get ahead of your long-term cellular health)
+   - Active Care and Treatment - Ongoing Support Assessment (if you're currently receiving clinical support and want nutrition guidance tailored to your situation)
+
+All responses are confidential and protected under the NZ Privacy Act 2020. Tristen will personally review your results and follow up within 1-2 business days.
+
+Questions before you start? Just reply to this email.
+
+Warm regards,
+Tristen Oosthuizen
+Clinical Nutritionist
+tristen@salvacare.co.nz
+salvacare.co.nz`;
+
+  document.getElementById('preview').textContent = subject + '\n\n' + body;
+
+  const mailLink = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  document.getElementById('mailBtn').setAttribute('href', mailLink);
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const fullText = subject + '\n\n' + body;
+    const btn = document.getElementById('copyBtn');
+    try {
+      await navigator.clipboard.writeText(fullText);
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy message';
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch (err) {
+      btn.textContent = 'Tap and hold text below to copy';
+    }
+  });
+</script>
+
+</body>
+</html>
